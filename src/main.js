@@ -15,33 +15,3 @@ new Vue({
   template: '<App/>',
   components: { App },
 });
-
-let artists = [];
-let albums = [];
-let tracks = [];
-let users = [];
-
-export function getartists() {
-  return artists;
-}
-export function setartists(partists) {
-  artists = partists;
-}
-export function getalbums() {
-  return albums;
-}
-export function setalbums(palbums) {
-  albums = palbums;
-}
-export function gettracks() {
-  return tracks;
-}
-export function settracks(ptracks) {
-  tracks = ptracks;
-}
-export function getusers() {
-  return users;
-}
-export function setusers(pusers) {
-  users = pusers;
-}
