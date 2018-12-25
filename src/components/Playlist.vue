@@ -101,7 +101,9 @@
                   <div class="track-artist">{{track.artistName}}</div>
                   <div class="track-time">{{getTimeFromMillis(track.trackTimeMillis)}}</div>
                   <div class="track-play-button">
-                    <button v-on:click="play(track.previewUrl, track.artworkUrl60, track.artistName)">Play</button>
+                    <button v-on:click="play(track.previewUrl, track.artworkUrl60, track.trackName, track.artistName)">
+                      Play
+                    </button>
                   </div>
                   <div class="track-remove-button">
                     <button v-on:click="removeTrack(playlist.id, track.trackId)">Remove</button>
@@ -197,8 +199,8 @@
           .then(this.getPlaylist);
       },
 
-      play(musicSrc, albumArt60, albumTitle) {
-        this.$root.$emit('playSong', musicSrc, albumArt60, albumTitle);
+      play(musicSrc, albumArt60, albumTitle, albumArtist) {
+        this.$root.$emit('playSong', musicSrc, albumArt60, albumTitle, albumArtist);
       }
     }
   };

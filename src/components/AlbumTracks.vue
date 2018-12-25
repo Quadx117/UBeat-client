@@ -35,7 +35,7 @@
             {{getTimeFromMillis(track.trackTimeMillis)}}
           </div>
           <div class="track-play-button audio-container">
-            <button v-on:click="play(track.previewUrl, track.artworkUrl60, track.artistName)">
+            <button v-on:click="play(track.previewUrl, track.artworkUrl60, track.trackName, track.artistName)">
               Play
             </button>
           </div>
@@ -79,8 +79,8 @@
     }),
 
     methods: {
-      play(musicSrc, albumArt60, albumTitle) {
-        this.$root.$emit('playSong', musicSrc, albumArt60, albumTitle);
+      play(musicSrc, albumArt60, albumTitle, albumArtist) {
+        this.$root.$emit('playSong', musicSrc, albumArt60, albumTitle, albumArtist);
       }
     }
 

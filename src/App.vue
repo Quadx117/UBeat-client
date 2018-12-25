@@ -4,10 +4,11 @@
 
     <router-view></router-view>
 
-    <div id="audio-footer" v-if="musicSrc !== ''">
+    <div id="audio-footer">
       <audio-player v-bind:music-src="musicSrc"
                     v-bind:album-art60="albumArt60"
-                    v-bind:album-title="albumTitle"/>
+                    v-bind:album-title="albumTitle"
+                    v-bind:album-artist="albumArtist"/>
     </div>
   </div>
 </template>
@@ -27,15 +28,17 @@
     data: () => ({
       musicSrc: '',
       albumArt60: '',
-      albumTitle: ''
+      albumTitle: '',
+      albumArtist: ''
     }),
 
     mounted() {
       this.$nextTick(() => {
-        this.$root.$on('playSong', (musicSrc, albumArt60, albumTitle) => {
+        this.$root.$on('playSong', (musicSrc, albumArt60, albumTitle, albumArtist) => {
           this.musicSrc = musicSrc;
           this.albumArt60 = albumArt60;
           this.albumTitle = albumTitle;
+          this.albumArtist = albumArtist;
         });
       });
     }
@@ -67,7 +70,7 @@
     position:         fixed;
     height:           70px;
     width:            100%;
-    bottom:           0px;
+    bottom:           0;
     left:             0;
   }
 
