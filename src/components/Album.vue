@@ -26,7 +26,8 @@
       </section>
 
       <!-- Add all tracks -->
-      <section id="add-all-tracks">
+      <section v-if="loggedIn()"
+               id="add-all-tracks">
         <select v-model="selectedPlaylist">
           <option value="Select playlist">
             Select playlist
@@ -47,7 +48,7 @@
       <section id="track-list">
         <album-tracks v-bind:playlists="playlists"
                       v-bind:tracks="tracks"
-                      />
+        />
       </section>
     </div>
 
@@ -57,7 +58,7 @@
 <script>
   import * as api from '@/api/api';
   import getUserPlaylists from '@/mixins/getUserPlaylists';
-  import getTimeFromMillis from '@/mixins/getTimeFromMillis';
+  import loggedIn from '@/mixins/loggedIn';
   import * as resultsSharing from '@/mixins/resultsSharing';
 
   import AppleBadge from './AppleBadge';
@@ -71,7 +72,7 @@
       AlbumTracks
     },
 
-    mixins: [getUserPlaylists, getTimeFromMillis],
+    mixins: [getUserPlaylists, loggedIn],
 
     data: () => ({
       selectedPlaylist: 'Select playlist',
@@ -123,7 +124,10 @@
       },
 
       async setUserPlaylists() {
-        this.playlists = await this.getUserPlaylists('5bf76146cee1510004a66c0f');
+        if (this.loggedIn()) {
+          // TODO(Eric): Remove hardcoded user here
+          this.playlists = await this.getUserPlaylists('5bf76146cee1510004a66c0f');
+        }
       },
 
       async addTrackToPlaylist(idPlaylist, track) {

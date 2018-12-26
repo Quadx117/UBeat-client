@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="loggedIn()">
 
     <div class="list">
       <h1>My artists</h1>
@@ -61,6 +61,7 @@
 <script>
   import * as api from '@/api/api';
   import getUserPlaylists from '@/mixins/getUserPlaylists';
+  import loggedIn from '@/mixins/loggedIn';
   import * as resultsSharing from '@/mixins/resultsSharing';
   import AppleBadge from './AppleBadge';
 
@@ -71,7 +72,7 @@
       AppleBadge
     },
 
-    mixins: [getUserPlaylists],
+    mixins: [getUserPlaylists, loggedIn],
 
     data: () => ({
       artists: [],
@@ -79,9 +80,11 @@
     }),
 
     created() {
-      // TODO(Eric): Remove hardcoded playlist (fetch all and choose randomly)
-      this.getArtistsFromPlaylists('5bf76146cee1510004a66c0f');
-      this.getAlbumsFromPlaylists('5bf76146cee1510004a66c0f');
+      if (this.loggedIn()) {
+        // TODO(Eric): Remove hardcoded playlist (fetch all and choose randomly)
+        this.getArtistsFromPlaylists('5bf76146cee1510004a66c0f');
+        this.getAlbumsFromPlaylists('5bf76146cee1510004a66c0f');
+      }
     },
 
     methods: {
@@ -144,9 +147,11 @@
           });
         });
       },
+
       routeArtist(artist) {
         resultsSharing.setArtist(artist);
       },
+
       routeAlbum(album) {
         resultsSharing.setAlbum(album);
       },

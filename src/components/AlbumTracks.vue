@@ -15,7 +15,8 @@
       <div class="track-play-button center-text">
         Listen
       </div>
-      <div class="track-add-playlist center-text">
+      <div v-if="loggedIn()"
+           class="track-add-playlist center-text">
         Add
       </div>
     </div>
@@ -39,7 +40,8 @@
               Play
             </button>
           </div>
-          <div class="track-add-playlist">
+          <div v-if="loggedIn()"
+               class="track-add-playlist">
             <select v-model="selectedPlaylist">
               <option value="Select playlist">
                 Select playlist
@@ -63,11 +65,12 @@
 
 <script>
   import getTimeFromMillis from '@/mixins/getTimeFromMillis';
+  import loggedIn from '@/mixins/loggedIn';
 
   export default {
     name: 'AlbumTracks',
 
-    mixins: [getTimeFromMillis],
+    mixins: [getTimeFromMillis, loggedIn],
 
     props: {
       playlists: Array,

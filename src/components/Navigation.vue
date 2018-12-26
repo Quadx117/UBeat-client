@@ -16,7 +16,7 @@
       </li>
 
       <!-- Search component -->
-      <li v-if="loggedIn">
+      <li>
         <div class="dropdown"
              ref="searchDropdown">
           <input type="search"
@@ -94,19 +94,18 @@
         </div>
       </li>
 
-      <li v-if="loggedIn">
+      <li>
         <router-link to="/">Home</router-link>
       </li>
 
-      <li>
-        <router-link v-if="loggedIn"
-                     to="/playlist">
+      <li v-if="loggedIn()">
+        <router-link to="/playlist">
           Playlist
         </router-link>
       </li>
 
       <!-- User dropdown with profile and logout -->
-      <li v-if="loggedIn">
+      <li v-if="loggedIn()">
         <div class="dropdown"
              ref="userDropdown"
              v-on:click="isUserDropdownVisible = !isUserDropdownVisible">
@@ -133,16 +132,14 @@
         </div>
       </li>
 
-      <li>
-        <router-link v-if="!loggedIn"
-                     to="/login">
+      <li v-if="!loggedIn()">
+        <router-link to="/login">
           Sign in
         </router-link>
       </li>
 
-      <li>
-        <router-link v-if="!loggedIn"
-                     to="/signup">
+      <li v-if="!loggedIn()">
+        <router-link to="/signup">
           Sign up
         </router-link>
       </li>
@@ -154,9 +151,12 @@
 
 <script>
   import * as api from '@/api/api';
+  import loggedIn from '@/mixins/loggedIn';
 
   export default {
     name: 'NavigationBar',
+
+    mixins: [loggedIn],
 
     data: () => ({
       username: '',
@@ -168,12 +168,6 @@
       autocompleteresults: [],
       search_flag_on_focus: false
     }),
-
-    computed: {
-      loggedIn() {
-        return (this.username !== '');
-      }
-    },
 
     async created() {
       document.addEventListener('click', this.documentClick);
@@ -316,18 +310,16 @@
       },
 
       documentClick(e) {
-        if (this.loggedIn) {
-          const target = e.target;
+        const target = e.target;
 
-          const userDropdown = this.$refs.userDropdown;
-          if (userDropdown !== target && !userDropdown.contains(target)) {
-            this.isUserDropdownVisible = false;
-          }
+        const userDropdown = this.$refs.userDropdown;
+        if (userDropdown && userDropdown !== target && !userDropdown.contains(target)) {
+          this.isUserDropdownVisible = false;
+        }
 
-          const searchDropdown = this.$refs.searchDropdown;
-          if (searchDropdown !== target && !searchDropdown.contains(target)) {
-            this.isSearchDropdownVisible = false;
-          }
+        const searchDropdown = this.$refs.searchDropdown;
+        if (searchDropdown && searchDropdown !== target && !searchDropdown.contains(target)) {
+          this.isSearchDropdownVisible = false;
         }
       }
     }

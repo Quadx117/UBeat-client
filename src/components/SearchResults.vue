@@ -98,7 +98,8 @@
                 See music tracks
               </button>
             </router-link>
-            <div class="dropdown"
+            <div v-if="loggedIn()"
+                 class="dropdown"
                  ref="playlistDropdown">
               <a class="dropdown-button"
                  v-on:click="isPlaylistDropdownVisible[index] = !isPlaylistDropdownVisible[index]">+</a>
@@ -151,7 +152,8 @@
             <div class="track-play-button caption">
               Play
             </div>
-            <div class="track-add-playlist caption">
+            <div v-if="loggedIn()"
+                 class="track-add-playlist caption">
               Add
             </div>
           </div>
@@ -176,7 +178,8 @@
                             v-bind:src="track.previewUrl">
                   </audio>
                 </div>
-                <div class="track-add-playlist">
+                <div v-if="loggedIn()"
+                     class="track-add-playlist">
                   <select v-model="selectedPlaylist">
                     <option value="Select playlist">
                       Select playlist
@@ -213,16 +216,16 @@
             v-bind:key="user.id"
             v-if="index <=7">
           <router-link to="/user">
-          <img class="imageusers"
-               src="../assets/user.png"
-               alt="User icon"
-          v-on:click="routeUser(user)">
+            <img class="imageusers"
+                 src="../assets/user.png"
+                 alt="User icon"
+                 v-on:click="routeUser(user)">
           </router-link>
           <div class="username">
             {{user.name}}
           </div>
 
-          <div>
+          <div v-if="loggedIn()">
             <div id="follow">
               <button class="follow-button"
                       v-if="user.id !== '5bf76146cee1510004a66c0f' && !isFollowed(user.id)"
@@ -245,12 +248,13 @@
 
 <script>
   import * as api from '@/api/api';
+  // TODO(Eric): Remove this
   import * as main from '@/main';
   import getUserPlaylists from '@/mixins/getUserPlaylists';
   import getTimeFromMillis from '@/mixins/getTimeFromMillis';
+  import loggedIn from '@/mixins/loggedIn';
   import * as resultsSharing from '@/mixins/resultsSharing';
   import AppleBadge from './AppleBadge';
-
 
   export default {
     name: 'SearchResults',
@@ -265,7 +269,7 @@
       }
     },
 
-    mixins: [getUserPlaylists, getTimeFromMillis],
+    mixins: [getUserPlaylists, getTimeFromMillis, loggedIn],
 
     data: () => ({
       searchType: '',
@@ -276,14 +280,16 @@
       users: [],
       playlists: [],
       selectedPlaylist: 'Select playlist',
-      isPlaylistDropdownVisible: { 0: false,
+      isPlaylistDropdownVisible: {
+        0: false,
         1: false,
         2: false,
         3: false,
         4: false,
         5: false,
         6: false,
-        7: false }
+        7: false
+      }
     }),
     methods: {
       routeArtist(artist) {
@@ -296,7 +302,10 @@
         resultsSharing.setUser(user);
       },
       async setUserPlaylists() {
-        this.playlists = await this.getUserPlaylists('5bf76146cee1510004a66c0f');
+        if (this.loggedIn()) {
+          // TODO(Eric): Remove hardcoded user
+          this.playlists = await this.getUserPlaylists('5bf76146cee1510004a66c0f');
+        }
       },
 
       async addTrackToPlaylist(idPlaylist, track) {
