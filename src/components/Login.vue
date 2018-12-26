@@ -81,6 +81,7 @@
   .login-button {
     color:                 white;
     background-color:      darkorange;
+    background-image:      linear-gradient(-180deg, #ff8c00, #ad5f00 90%);
     border:                1px solid rgba(27, 31, 35, 0.2);
     -webkit-border-radius: 0.25em;
     -moz-border-radius:    0.25em;
