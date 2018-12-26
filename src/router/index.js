@@ -17,19 +17,23 @@ export default new Router({
       path: '/',
       name: 'home',
       component: Home,
-    }, {
+    },
+    {
       path: '/artist',
       name: 'artist',
       component: Artist
-    }, {
+    },
+    {
       path: '/album',
       name: 'album',
       component: Album
-    }, {
+    },
+    {
       path: '/playlist',
       name: 'playlist',
       component: Playlist
-    }, {
+    },
+    {
       path: '/search',
       name: 'search',
       component: SearchResults,

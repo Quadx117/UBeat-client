@@ -79,6 +79,7 @@
     }),
 
     created() {
+      // TODO(Eric): Remove hardcoded playlist (fetch all and choose randomly)
       this.getArtistsFromPlaylists('5bf76146cee1510004a66c0f');
       this.getAlbumsFromPlaylists('5bf76146cee1510004a66c0f');
     },
