@@ -2,7 +2,6 @@ const formUrlEncoder = require('form-urlencoded').default;
 
 const baseUrl = 'https://ubeat.herokuapp.com';
 
-
 // NOTE(Eric): Used to locate the token in the browser's local storage
 const tokenName = 'uBeatToken';
 
