@@ -63,7 +63,7 @@
             const user = await api.login(this.email, this.password);
             if (user) {
               this.$root.$emit('loginSuccessful', user.name);
-              this.$router.push('Home');
+              this.$router.push('/');
             }
           }
         }

@@ -268,6 +268,7 @@
         const result = api.logout();
         if (result) {
           this.username = '';
+          this.$router.push('/login');
         }
       },
 
@@ -310,7 +311,7 @@
       routeToResults() {
         if (this.searchInput !== '') {
           this.search();
-          this.$router.push('Search');
+          this.$router.push('/search');
         }
       },
 

@@ -15,38 +15,38 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'home',
       component: Home,
     }, {
       path: '/artist',
-      name: 'Artist',
+      name: 'artist',
       component: Artist
     }, {
       path: '/album',
-      name: 'Album',
+      name: 'album',
       component: Album
     }, {
       path: '/playlist',
-      name: 'Playlist',
+      name: 'playlist',
       component: Playlist
     }, {
       path: '/search',
-      name: 'Search',
+      name: 'search',
       component: SearchResults,
     },
     {
       path: '/user',
-      name: 'User',
+      name: 'user',
       component: User,
     },
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       component: Login,
     },
     {
       path: '/signup',
-      name: 'SignUp',
+      name: 'signup',
       component: SignUp,
     }
   ]
