@@ -27,7 +27,7 @@
 
     <button class="login-button"
             v-on:click="login">
-      Login
+      Sign in
     </button>
   </div>
 </template>

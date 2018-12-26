@@ -126,7 +126,7 @@
               <div v-on:click="logout">
                 <img src="../assets/sign-out-option.png"
                      alt="Sign Out Icon"/>
-                Logout
+                Sign out
               </div>
             </router-link>
           </div>
@@ -136,7 +136,7 @@
       <li>
         <router-link v-if="!loggedIn"
                      to="/login">
-          Login
+          Sign in
         </router-link>
       </li>
 
