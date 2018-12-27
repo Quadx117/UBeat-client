@@ -248,8 +248,6 @@
 
 <script>
   import * as api from '@/api/api';
-  // TODO(Eric): Remove this
-  import * as main from '@/main';
   import getUserPlaylists from '@/mixins/getUserPlaylists';
   import getTimeFromMillis from '@/mixins/getTimeFromMillis';
   import loggedIn from '@/mixins/loggedIn';
@@ -344,10 +342,6 @@
     },
 
     created() {
-      this.artists = main.getartists();
-      this.albums = main.getalbums();
-      this.tracks = main.gettracks();
-      this.users = main.getusers();
       this.setUserPlaylists();
     },
 
@@ -356,13 +350,9 @@
         const mContext = this;
         this.$root.$on('search', (searchtype) => {
           this.searchType = searchtype;
-          main.setartists([]);
-          main.setalbums([]);
-          main.settracks([]);
           mContext.artists = [];
           mContext.albums = [];
           mContext.tracks = [];
-          main.setusers([]);
           mContext.users = [];
         });
 
@@ -376,16 +366,12 @@
               mContext.artists.push(result);
             }
           });
-          main.setartists(mContext.artists);
-          main.setalbums(mContext.albums);
-          main.settracks(mContext.tracks);
         });
 
         this.$root.$on('userSearch', (results) => {
           results.forEach((result) => {
             mContext.users.push(result);
           });
-          main.setusers(mContext.users);
         });
       });
     }
