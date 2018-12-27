@@ -169,6 +169,13 @@
       search_flag_on_focus: false
     }),
 
+    watch: {
+      // Whenever username changes, this function will run.
+      username() {
+        this.$forceUpdate();
+      }
+    },
+
     async created() {
       document.addEventListener('click', this.documentClick);
 
