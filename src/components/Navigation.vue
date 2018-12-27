@@ -265,8 +265,9 @@
     },
 
     methods: {
-      logout() {
-        const result = api.logout();
+      async logout() {
+        const result = await api.logout();
+        console.log(result);
         if (result) {
           this.username = '';
           this.$router.push('/login');
