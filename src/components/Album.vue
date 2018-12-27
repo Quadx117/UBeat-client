@@ -155,6 +155,7 @@
   }
 
   #album-info-name {
+    margin-top:    0;
     margin-bottom: 10px;
   }
 
