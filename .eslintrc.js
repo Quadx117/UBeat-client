@@ -2,14 +2,19 @@
 
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
   parserOptions: {
+    parser: 'babel-eslint',
     sourceType: 'module'
   },
   env: {
     browser: true,
   },
-  extends: 'airbnb-base',
+  extends: [
+    'airbnb-base',
+    // add more generic rulesets here, such as:
+    // 'eslint:recommended',
+    'plugin:vue/recommended'
+  ],
   // required to lint *.vue files
   plugins: [
     'html'
@@ -24,8 +29,8 @@ module.exports = {
   },
   // add your custom rules here
   'rules': {
-    "comma-dangle": 0,
-    "linebreak-style": 0,
+    'comma-dangle': 0,
+    'linebreak-style': 0,
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       'js': 'never',
@@ -36,6 +41,9 @@ module.exports = {
       'optionalDependencies': ['test/unit/index.js']
     }],
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    // override/add rules settings here, such as:
+    // 'vue/no-unused-vars': 'error'
+    // 'vue/script-indent': 'error'
   }
-}
+};
