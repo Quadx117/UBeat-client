@@ -1,6 +1,7 @@
 <template>
   <div class="main-container">
 
+    <!-- Artist info section -->
     <section id="artist-container">
       <div>
         <h1 class="artist-name">
@@ -14,6 +15,7 @@
       <apple-badge v-bind:i-tune-link="iTuneLink"/>
     </section>
 
+    <!-- Albums section -->
     <section class="has-top-border">
       <h3>Albums</h3>
       <div id="album-container">
@@ -74,22 +76,6 @@
 </script>
 
 <style scoped>
-  .artist-name {
-    margin-top:    0;
-    margin-bottom: 0;
-  }
-
-  .artist-genre {
-    color:         #888888;
-    margin-top:    0;
-    margin-bottom: 0;
-  }
-
-  .has-top-border {
-    border-top: 1px solid #e5e5e5;
-    margin-top: 20px;
-  }
-
   #artist-container {
     display:         flex;
     flex-direction:  row;
@@ -97,6 +83,20 @@
     justify-content: space-between;
     align-items:     center;
     overflow:        auto;
+  }
+
+  .artist-name {
+    margin: 0;
+  }
+
+  .artist-genre {
+    color:  #888888;
+    margin: 0;
+  }
+
+  .has-top-border {
+    border-top: 1px solid #e5e5e5;
+    margin-top: 20px;
   }
 
   #album-container {
