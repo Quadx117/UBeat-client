@@ -1,10 +1,10 @@
 <template>
   <div v-if="loggedIn()">
 
-    <div class="list">
-      <h1>My artists</h1>
-      <ul id="list-artists"
-          class="home-ul"
+    <!-- My Artists section -->
+    <section class="center-text">
+      <h1>My Artists</h1>
+      <ul class="home-ul"
           v-if="artists && artists.length">
         <li class="home-li"
             v-for="artist of artists"
@@ -24,17 +24,17 @@
           <apple-badge v-bind:i-tune-link="artist.artistLinkUrl"/>
         </li>
       </ul>
-    </div>
+    </section>
 
-    <div class="list">
-      <h1>My albums</h1>
-      <ul id="list-albums"
-          class="home-ul"
+    <!-- My Albums section -->
+    <section class="center-text">
+      <h1>My Albums</h1>
+      <ul class="home-ul"
           v-if="albums && albums.length">
         <li class="home-li"
             v-for="album of albums"
             v-bind:key="album.collectionId">
-          <img class="image"
+          <img class="album-art"
                v-bind:src="album.artworkUrl100"/>
           <div class="album-title">
             {{album.collectionName}}
@@ -55,7 +55,7 @@
           <apple-badge v-bind:i-tune-link="album.collectionViewUrl"/>
         </li>
       </ul>
-    </div>
+    </section>
 
   </div>
 </template>
@@ -163,13 +163,12 @@
 </script>
 
 <style scoped>
-  .list {
+  .center-text {
     text-align: center;
   }
 
   .home-ul {
     list-style-type: none;
-    text-align:      center;
   }
 
   @media screen and (max-width: 370px) {
@@ -186,7 +185,6 @@
     display:          inline-flex;
     flex-direction:   column;
     justify-content:  space-around;
-    text-align:       center;
     border:           solid #4f4f4f;
     border-radius:    10px;
     margin:           0 50px 50px 0;
@@ -196,25 +194,6 @@
   .artist-genre {
     margin-top: -30px;
     font-size:  16px;
-  }
-
-  .album-genre {
-    margin-top: 30px;
-    font-size:  16px;
-  }
-
-  .image {
-    width:       100px;
-    height:      100px;
-    margin-left: 18px;
-    margin-top:  10px;
-  }
-
-  .album-title {
-    margin-left: 110px;
-    margin-top:  -80px;
-    padding:     0 10px;
-    min-height:  50px;
   }
 
   .button-albums {
@@ -230,6 +209,25 @@
 
   .button-albums:hover {
     background-color: #1053aa
+  }
+
+  .album-art {
+    width:       100px;
+    height:      100px;
+    margin-left: 18px;
+    margin-top:  10px;
+  }
+
+  .album-title {
+    margin-left: 110px;
+    margin-top:  -80px;
+    padding:     0 10px;
+    min-height:  50px;
+  }
+
+  .album-genre {
+    margin-top: 30px;
+    font-size:  16px;
   }
 
   .button-tracks {
