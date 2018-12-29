@@ -75,14 +75,14 @@
 
 <style scoped>
   .artist-name {
-    margin-top:    0px;
-    margin-bottom: 0px;
+    margin-top:    0;
+    margin-bottom: 0;
   }
 
   .artist-genre {
     color:         #888888;
-    margin-top:    0px;
-    margin-bottom: 0px;
+    margin-top:    0;
+    margin-bottom: 0;
   }
 
   .has-top-border {

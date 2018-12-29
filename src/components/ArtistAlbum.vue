@@ -43,8 +43,8 @@
 <style scoped>
   .album-item {
     /* top | right | bottom | left */
-    margin:     0px 20px 20px 0px;
-    padding:    0px;
+    margin:     0 20px 20px 0;
+    padding:    0;
     text-align: center;
   }
 
