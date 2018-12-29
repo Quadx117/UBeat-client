@@ -55,7 +55,7 @@
     margin-bottom:    90px;
   }
 
-  .mainContainer {
+  .main-container {
     background-image: linear-gradient(#404040, #202020);
     border:           5px solid #4f4f4f;
     border-radius:    8px;
@@ -75,7 +75,7 @@
   }
 
   @media screen and (max-width: 768px) {
-    .mainContainer {
+    .main-container {
       padding: 10px;
     }
   }

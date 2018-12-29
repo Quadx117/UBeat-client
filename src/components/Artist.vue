@@ -1,30 +1,32 @@
 <template>
-  <div class="mainContainer">
+  <div class="main-container">
 
-    <section id="artistContainer">
+    <section id="artist-container">
       <div>
-        <h1 class="artistName">{{name}}</h1>
-        <h3 class="artistGenre">{{genre}}</h3>
+        <h1 class="artist-name">
+          {{name}}
+        </h1>
+        <h3 class="artist-genre">
+          {{genre}}
+        </h3>
       </div>
 
       <apple-badge v-bind:i-tune-link="iTuneLink"/>
     </section>
 
-    <section class="hasTopBorder">
+    <section class="has-top-border">
       <h3>Albums</h3>
-      <div id="albumContainer">
-        <album
-          v-for="album of albums"
-          v-bind:key="album.collectionId"
-          v-bind:albumTitle="album.collectionName"
-          v-bind:albumYear="album.releaseDate.split('-')[0]"
-          v-bind:albumArtSrcSet="album.artworkUrl60 + ' 60w, ' + album.artworkUrl100 + ' 100w'"
-          v-bind:albumArt60="album.artworkUrl60"
-          v-bind:albumArt100="album.artworkUrl100"
-        />
-      </div> <!-- End div albumContainer -->
+      <div id="album-container">
+        <album v-for="album of albums"
+               v-bind:key="album.collectionId"
+               v-bind:albumTitle="album.collectionName"
+               v-bind:albumYear="album.releaseDate.split('-')[0]"
+               v-bind:albumArtSrcSet="album.artworkUrl60 + ' 60w, ' + album.artworkUrl100 + ' 100w'"
+               v-bind:albumArt60="album.artworkUrl60"
+               v-bind:albumArt100="album.artworkUrl100"/>
+      </div> <!-- End div album-container -->
     </section> <!-- End section albums -->
-  </div> <!-- End div mainContainer -->
+  </div> <!-- End div main-container -->
 </template>
 
 <script>
@@ -72,23 +74,23 @@
 </script>
 
 <style scoped>
-  .artistName {
+  .artist-name {
     margin-top:    0px;
     margin-bottom: 0px;
   }
 
-  .artistGenre {
+  .artist-genre {
     color:         #888888;
     margin-top:    0px;
     margin-bottom: 0px;
   }
 
-  .hasTopBorder {
+  .has-top-border {
     border-top: 1px solid #e5e5e5;
     margin-top: 20px;
   }
 
-  #artistContainer {
+  #artist-container {
     display:         flex;
     flex-direction:  row;
     flex-wrap:       wrap;
@@ -97,7 +99,7 @@
     overflow:        auto;
   }
 
-  #albumContainer {
+  #album-container {
     display:         flex;
     flex-direction:  row;
     flex-wrap:       wrap;

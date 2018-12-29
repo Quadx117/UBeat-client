@@ -12,7 +12,9 @@
         class="top-nav">
 
       <li id="app-name">
-        <router-link to="/">UBeat</router-link>
+        <router-link to="/">
+          UBeat
+        </router-link>
       </li>
 
       <!-- Search component -->
@@ -30,10 +32,10 @@
                  v-on:blur="search_flag_on_focus = false"
                  v-on:keyup="autocomplete()">
 
-          <div class="dropdown-search_result"
+          <div class="dropdown-search-result"
                v-if="search_flag_on_focus && searchInput !== ''">
-            <div class="search-result"
-                 id="search-result"
+            <div id="search-result"
+                 class="search-result"
                  v-for="result of autocompleteresults"
                  v-bind:key="result.collectionId"
                  v-on:mousedown="searchInput = result">
@@ -60,42 +62,54 @@
                      value=""
                      checked
                      v-model="searchType">
-              <label for="global-radio">Global</label>
+              <label for="global-radio">
+                Global
+              </label>
             </div>
             <div>
               <input type="radio"
                      id="artist-radio"
                      value="/artists"
                      v-model="searchType">
-              <label for="artist-radio">Artist</label>
+              <label for="artist-radio">
+                Artist
+              </label>
             </div>
             <div>
               <input type="radio"
                      id="album-radio"
                      value="/albums"
                      v-model="searchType">
-              <label for="album-radio">Album</label>
+              <label for="album-radio">
+                Album
+              </label>
             </div>
             <div>
               <input type="radio"
                      id="track-radio"
                      value="/tracks"
                      v-model="searchType">
-              <label for="track-radio">Track</label>
+              <label for="track-radio">
+                Track
+              </label>
             </div>
             <div>
               <input type="radio"
                      id="user-radio"
                      value="/users"
                      v-model="searchType">
-              <label for="user-radio">User</label>
+              <label for="user-radio">
+                User
+              </label>
             </div>
           </div>
         </div>
       </li>
 
       <li>
-        <router-link to="/">Home</router-link>
+        <router-link to="/">
+          Home
+        </router-link>
       </li>
 
       <li v-if="loggedIn()">
@@ -110,7 +124,9 @@
              ref="userDropdown"
              v-on:click="isUserDropdownVisible = !isUserDropdownVisible">
           <a class="dropdown-button">
-            <router-link to="#">{{username}}</router-link>
+            <router-link to="#">
+              {{username}}
+            </router-link>
             <img src="../assets/arrow_down.png"
                  alt="Scroll Arrow"/>
           </a>
@@ -165,7 +181,7 @@
       menuImage: '/static/menu.png',
       isUserDropdownVisible: false,
       isSearchDropdownVisible: false,
-      autocompleteresults: [],
+      autocompleteResults: [],
       search_flag_on_focus: false
     }),
 
@@ -298,14 +314,14 @@
       async autocomplete() {
         const queryString = `?q=${encodeURIComponent(this.searchInput)}`;
         const results = await api.globalSearch(`${this.searchType}${queryString}`);
-        this.autocompleteresults = [];
+        this.autocompleteResults = [];
         results.forEach((result) => {
           if (result.wrapperType === 'track') {
-            this.autocompleteresults.push(result.trackName);
+            this.autocompleteResults.push(result.trackName);
           } else if (result.wrapperType === 'collection') {
-            this.autocompleteresults.push(result.collectionName);
+            this.autocompleteResults.push(result.collectionName);
           } else if (result.wrapperType === 'artist') {
-            this.autocompleteresults.push(result.artistName);
+            this.autocompleteResults.push(result.artistName);
           }
         });
       },
@@ -430,7 +446,7 @@
     background-color: #dddddd
   }
 
-  .dropdown-search_result {
+  .dropdown-search-result {
     position:                   absolute;
     background-color:           #4f4f4f;
     min-width:                  160px;

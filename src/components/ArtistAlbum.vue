@@ -1,6 +1,6 @@
 <template>
-  <div class="albumItem">
-    <img class="albumArt"
+  <div class="album-item">
+    <img class="album-art"
          v-bind:srcset="albumArtSrcSet"
          sizes="(max-width: 667px) 100px,
                 (max-width: 1024px) 150px,
@@ -10,10 +10,14 @@
     <!-- NOTE(Eric): This is a bit hacky but it will make the title wrap at the image boundary. In other words,
          The width of the outer div will be the same as the image.  The year will never be too wide and putting
          it inside did not work properly. -->
-    <div class="sameWidthAsSibling">
-      <div class="albumTitle">{{albumTitle}}</div>
+    <div class="same-width-as-sibling">
+      <div class="album-title">
+        {{albumTitle}}
+      </div>
     </div>
-    <div class="albumYear">{{albumYear}}</div>
+    <div class="album-year">
+      {{albumYear}}
+    </div>
   </div>
 </template>
 
@@ -37,30 +41,30 @@
 </script>
 
 <style scoped>
-  .albumItem {
+  .album-item {
     /* top | right | bottom | left */
     margin:     0px 20px 20px 0px;
     padding:    0px;
     text-align: center;
   }
 
-  .albumArt {
+  .album-art {
     border-radius: 8px;
   }
 
-  .albumTitle {
+  .album-title {
     color: #cdcdcd;
   }
 
-  .albumYear {
+  .album-year {
     color: #8e8e93;
   }
 
-  .sameWidthAsSibling {
+  .same-width-as-sibling {
     display: flex;
   }
 
-  .sameWidthAsSibling > div {
+  .same-width-as-sibling > div {
     flex-grow: 1;
     width:     0;
   }

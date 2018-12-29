@@ -21,21 +21,23 @@
         <input id="search-track-name"
                type="search"
                placeholder="Search tracks..."
-               v-model="tracksearch"
+               v-model="trackSearch"
                v-on:focus="flag_on_focus = true"
                v-on:blur="flag_on_focus = false"
                v-on:keyup="searchTracks()">
         <div id="search-result"
-             v-for="track of searchedtracks"
+             v-for="track of searchedTracks"
              v-bind:key="track.collectionId"
-             v-if="flag_on_focus && tracksearch !== ''"
+             v-if="flag_on_focus && trackSearch !== ''"
              v-on:mousedown="selectTrack(track)">
           {{track.trackName}}, {{track.artistName}}
         </div>
       </div>
       <select id="select-playlist"
               v-model="selectedPlaylist">
-        <option value="Select playlist">Select playlist</option>
+        <option value="Select playlist">
+          Select playlist
+        </option>
         <option v-for="playlist in playlists"
                 v-bind:key="playlist.id"
                 v-bind:value="playlist">
@@ -53,14 +55,16 @@
       <li v-for="playlist of playlists"
           v-bind:key="playlist.id">
 
-        <div class="mainContainer">
+        <div class="main-container">
           <button class="delete-playlist-button"
                   v-on:click="deletePlaylist(playlist.id)">
             Delete playlist
           </button>
 
           <div class="playlist-header">
-            <h2 class="playlist-name">{{playlist.name}}</h2>
+            <h2 class="playlist-name">
+              {{playlist.name}}
+            </h2>
             <button class="edit-playlist-button"
                     v-on:click="editPlaylist(playlist.id)">
               Edit
@@ -85,10 +89,18 @@
 
           <div>
             <div class="track-list caption">
-              <div class="track-title caption">Title</div>
-              <div class="track-artist caption">Artist</div>
-              <div class="track-time caption">Time</div>
-              <div class="track-play-button caption">Play</div>
+              <div class="track-title caption">
+                Title
+              </div>
+              <div class="track-artist caption">
+                Artist
+              </div>
+              <div class="track-time caption">
+                Time
+              </div>
+              <div class="track-play-button caption">
+                Play
+              </div>
               <div class="track-remove-button caption"></div>
             </div>
 
@@ -97,16 +109,24 @@
               <li v-for="track of playlist.tracks"
                   v-bind:key="track.trackId">
                 <div class="track-list">
-                  <div class="track-title">{{track.trackName}}</div>
-                  <div class="track-artist">{{track.artistName}}</div>
-                  <div class="track-time">{{getTimeFromMillis(track.trackTimeMillis)}}</div>
+                  <div class="track-title">
+                    {{track.trackName}}
+                  </div>
+                  <div class="track-artist">
+                    {{track.artistName}}
+                  </div>
+                  <div class="track-time">
+                    {{getTimeFromMillis(track.trackTimeMillis)}}
+                  </div>
                   <div class="track-play-button">
                     <button v-on:click="play(track.previewUrl, track.artworkUrl60, track.trackName, track.artistName)">
                       Play
                     </button>
                   </div>
                   <div class="track-remove-button">
-                    <button v-on:click="removeTrack(playlist.id, track.trackId)">Remove</button>
+                    <button v-on:click="removeTrack(playlist.id, track.trackId)">
+                      Remove
+                    </button>
                   </div>
                 </div>
               </li>
@@ -134,8 +154,8 @@
       playlists: [],
       flag_on_focus: false,
       flag_on_edit: '',
-      tracksearch: '',
-      searchedtracks: [],
+      trackSearch: '',
+      searchedTracks: [],
       selectedPlaylist: 'Select playlist',
       selectedTrack: null,
     }),
@@ -182,14 +202,14 @@
       },
 
       async searchTracks() {
-        const search = this.tracksearch.split(' ')
+        const search = this.trackSearch.split(' ')
           .join('%20');
         const results = await api.globalSearch(`/tracks/?q=${search}%20&limit=5`);
-        this.searchedtracks = results;
+        this.searchedTracks = results;
       },
 
       selectTrack(track) {
-        this.tracksearch = `${track.trackName}, ${track.artistName}`;
+        this.trackSearch = `${track.trackName}, ${track.artistName}`;
         this.selectedTrack = track;
         this.flag_on_focus = false;
       },

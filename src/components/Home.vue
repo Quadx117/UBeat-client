@@ -10,12 +10,13 @@
             v-for="artist of artists"
             v-bind:key="artist.artistId">
           {{artist.artistName}}
-          <div class="genre-artist">
+          <div class="artist-genre">
             {{artist.primaryGenreName}}
           </div>
           <div>
             <router-link to="/artist">
-              <button v-on:click="routeArtist(artist)" class="button-albums">
+              <button v-on:click="routeArtist(artist)"
+                      class="button-albums">
                 See albums
               </button>
             </router-link>
@@ -38,14 +39,15 @@
           <div class="album-title">
             {{album.collectionName}}
           </div>
-          <div class="genre-album">
+          <div class="album-genre">
             {{album.primaryGenreName}} - {{album.trackCount}} Titles
             <br/>
             {{setFormatDate(album.releaseDate)}}
           </div>
           <div>
             <router-link to="/album">
-              <button v-on:click="routeAlbum(album)" class="button-tracks">
+              <button v-on:click="routeAlbum(album)"
+                      class="button-tracks">
                 See music tracks
               </button>
             </router-link>
@@ -191,12 +193,12 @@
     align-items:      stretch;
   }
 
-  .genre-artist {
+  .artist-genre {
     margin-top: -30px;
     font-size:  16px;
   }
 
-  .genre-album {
+  .album-genre {
     margin-top: 30px;
     font-size:  16px;
   }

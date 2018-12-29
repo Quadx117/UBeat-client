@@ -5,19 +5,24 @@ let artist = {};
 export function getUser() {
   return user;
 }
-export function setUser(newuser) {
-  user = newuser;
+
+export function setUser(newUser) {
+  user = newUser;
 }
+
 export function getAlbum() {
   return album;
 }
-export function setAlbum(newalbum) {
-  album = newalbum;
+
+export function setAlbum(newAlbum) {
+  album = newAlbum;
 }
+
 export function getArtist() {
   return artist;
 }
-export function setArtist(newartist) {
-  artist = newartist;
+
+export function setArtist(newArtist) {
+  artist = newArtist;
 }
 

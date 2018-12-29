@@ -1,5 +1,5 @@
 <template>
-  <div class="mainContainer login-container">
+  <div class="main-container login-container">
 
     <label class="login-label"
            for="email">

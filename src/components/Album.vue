@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div class="mainContainer">
+    <div class="main-container">
 
       <!-- Album info -->
       <section id="album-container">
@@ -47,8 +47,7 @@
       <!-- Album Tracks -->
       <section id="track-list">
         <album-tracks v-bind:playlists="playlists"
-                      v-bind:tracks="tracks"
-        />
+                      v-bind:tracks="tracks"/>
       </section>
     </div>
 
@@ -90,6 +89,7 @@
     }),
 
     created() {
+      // TODO(Eric): Remove this or see if we should modify the unused method below.
       // this.getAlbum();
       const album = resultsSharing.getAlbum();
       this.albumId = album.collectionId;
@@ -119,8 +119,7 @@
       },
 
       async getTracks() {
-        const tracks = await api.getTracks(this.albumId);
-        this.tracks = tracks;
+        this.tracks = await api.getTracks(this.albumId);
       },
 
       async setUserPlaylists() {

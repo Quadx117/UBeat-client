@@ -78,7 +78,6 @@
 
   import Playlist from './UserPlaylist';
 
-
   export default {
     name: 'User',
 

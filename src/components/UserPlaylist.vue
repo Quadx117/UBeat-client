@@ -1,5 +1,5 @@
 <template>
-  <div class="mainContainer">
+  <div class="main-container">
     <h2 class="playlist-name">
       {{playlist.name}}
     </h2>
@@ -82,7 +82,7 @@
     text-align: center;
   }
 
-  .mainContainer {
+  .main-container {
     padding-top: 0;
   }
 

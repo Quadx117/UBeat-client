@@ -1,8 +1,8 @@
 <template>
   <div>
 
-    <div id="AdvancedAlbums"
-         class="advancedtitle"
+    <div id="advanced-albums"
+         class="advanced-title"
          v-if="searchType === '/albums'">
       <img src="../assets/album.png"
            alt="Album icon"/>
@@ -11,8 +11,8 @@
       </h1>
     </div>
 
-    <div id="AdvancedArtists"
-         class="advancedtitle"
+    <div id="advanced-artists"
+         class="advanced-title"
          v-if="searchType === '/artists'">
       <img src="../assets/artist.png"
            alt="Artist icon"/>
@@ -21,8 +21,8 @@
       </h1>
     </div>
 
-    <div id="AdvancedTracks"
-         class="advancedtitle"
+    <div id="advanced-tracks"
+         class="advanced-title"
          v-if="searchType === '/tracks'">
       <img src="../assets/track.png"
            alt="Track icon"/>
@@ -31,8 +31,8 @@
       </h1>
     </div>
 
-    <div id="AdvancedUsers"
-         class="advancedtitle"
+    <div id="advanced-users"
+         class="advanced-title"
          v-if="searchType === '/users'">
       <img src="../assets/user.png"
            alt="User icon"/>
@@ -52,9 +52,9 @@
         <li class="home-li"
             v-for="(artist, index) in artists"
             v-bind:key="artist.artistId"
-            v-if="index <=7">
+            v-if="index <= 7">
           {{artist.artistName}}
-          <div class="genre-artist">
+          <div class="artist-genre">
             {{artist.primaryGenreName}}
           </div>
           <div>
@@ -80,14 +80,14 @@
         <li class="home-li"
             v-for="(album, index) in albums"
             v-bind:key="album.collectionId"
-            v-if="index <=7">
+            v-if="index <= 7">
           <img class="image"
                alt="Album art"
                v-bind:src="album.artworkUrl100">
           <div class="album-title">
             {{album.collectionName}}
           </div>
-          <div class="genre-album">
+          <div class="album-genre">
             {{album.primaryGenreName}} - {{album.trackCount}} Titles
             <br/>
             {{album.releaseDate | crop}}
@@ -102,7 +102,9 @@
                  class="dropdown"
                  ref="playlistDropdown">
               <a class="dropdown-button"
-                 v-on:click="isPlaylistDropdownVisible[index] = !isPlaylistDropdownVisible[index]">+</a>
+                 v-on:click="isPlaylistDropdownVisible[index] = !isPlaylistDropdownVisible[index]">
+                +
+              </a>
               <div class="dropdown-content"
                    v-if="isPlaylistDropdownVisible[index]">
                 <section id="add-all-tracks">
@@ -137,7 +139,7 @@
         List of tracks
       </h1>
 
-      <div class="mainContainer">
+      <div class="main-container">
         <div>
           <div class="track-list caption">
             <div class="track-title caption">
@@ -161,7 +163,7 @@
           <ul v-if="tracks && tracks.length">
             <li v-for="(track, index) in tracks"
                 v-bind:key="track.trackId"
-                v-if="index <=7">
+                v-if="index <= 7">
               <div class="track-list">
                 <div class="track-title">
                   {{track.trackName}}
@@ -201,7 +203,6 @@
       </div>
     </div>
 
-
     <div id="users"
          class="list"
          v-if="users && users.length">
@@ -214,9 +215,9 @@
         <li class="home-li-user"
             v-for="(user, index) in users"
             v-bind:key="user.id"
-            v-if="index <=7">
+            v-if="index <= 7">
           <router-link to="/user">
-            <img class="imageusers"
+            <img class="image-user"
                  src="../assets/user.png"
                  alt="User icon"
                  v-on:click="routeUser(user)">
@@ -410,12 +411,12 @@
     align-items:      stretch;
   }
 
-  .genre-artist {
+  .artist-genre {
     margin-top: -30px;
     font-size:  16px;
   }
 
-  .genre-album {
+  .album-genre {
     margin-top: 30px;
     font-size:  16px;
   }
@@ -514,19 +515,19 @@
     cursor: pointer;
   }
 
-  .advancedtitle {
+  .advanced-title {
     padding-top:    20px;
     padding-left:   30px;
     display:        flex;
     flex-direction: row;
   }
 
-  .advancedtitle > img {
+  .advanced-title > img {
     width:  96px;
     height: 96px;
   }
 
-  .advancedtitle > h1 {
+  .advanced-title > h1 {
     margin-left: 20px;
     margin-top:  50px;
   }
@@ -550,18 +551,7 @@
 
   }
 
-  .button-follow {
-    background-color: dodgerblue;
-    border:           dodgerblue;
-    border-radius:    8px;
-    color:            white;
-    font-weight:      bold;
-    font-size:        16px;
-    padding:          10px 10px;
-    cursor:           pointer;
-  }
-
-  .imageusers {
+  .image-user {
     align-self:  center;
     padding-top: 20px;
     width:       100px;
