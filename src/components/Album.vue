@@ -45,7 +45,7 @@
       </section>
 
       <!-- Album Tracks -->
-      <section id="track-list">
+      <section>
         <album-tracks v-bind:playlists="playlists"
                       v-bind:tracks="tracks"/>
       </section>
@@ -153,6 +153,10 @@
     overflow:        auto;
   }
 
+  .album-info {
+    padding-left: 40px;
+  }
+
   #album-info-name {
     margin-top:    0;
     margin-bottom: 10px;
@@ -167,12 +171,8 @@
     margin-bottom: 10px;
   }
 
-  .album-info {
-    padding-left: 40px;
-  }
-
   #add-all-tracks {
-    margin:     10px auto;
+    margin:     30px auto;
     text-align: center;
   }
 
@@ -185,10 +185,6 @@
     font-size:        16px;
     padding:          10px 10px;
     cursor:           pointer;
-  }
-
-  #track-list {
-    margin-top: 30px;
   }
 
   @media screen and (max-width: 769px) {
