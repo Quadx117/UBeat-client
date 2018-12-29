@@ -35,7 +35,7 @@
           <div class="track-time center-text">
             {{getTimeFromMillis(track.trackTimeMillis)}}
           </div>
-          <div class="track-play-button audio-container">
+          <div class="track-play-button center-text">
             <button v-on:click="play(track.previewUrl, track.artworkUrl60, track.trackName, track.artistName)">
               Play
             </button>
@@ -95,19 +95,8 @@
     border-bottom: 1px solid white;
   }
 
-  .audio-container {
-    overflow: auto;
-  }
-
   .center-text {
     text-align: center;
-  }
-
-  audio {
-    display:   block;
-    width:     100%;
-    min-width: 300px;
-    margin:    4px 0;
   }
 
   @media screen and (min-width: 770px) {
@@ -146,9 +135,9 @@
     }
 
     .track-play-button {
-      flex-grow:    2;
-      flex-shrink:  1;
-      flex-basis:   300px;
+      flex-grow:    0;
+      flex-shrink:  0;
+      flex-basis:   60px;
       margin-right: 10px;
     }
 
@@ -174,20 +163,15 @@
       display: none;
     }
 
-    .track-title, .track-number, .track-time {
+    .track-title {
       text-align: center;
     }
 
     .track-play-button {
-      flex-grow:   1;
-      flex-shrink: 1;
-      width:       100%;
-    }
-
-    audio {
-      min-width:      300px;
-      padding-bottom: 4px;
-      margin:         auto;
+      flex-grow:     1;
+      flex-shrink:   1;
+      width:         100%;
+      margin-bottom: 4px;
     }
   }
 </style>
