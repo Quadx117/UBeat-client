@@ -1,25 +1,32 @@
 <template>
-  <nav>
-    <div id="burger-button"
-         v-on:click="responsiveBurger"
+  <nav id="nav-header">
+
+    <!-- Burger button -->
+    <div v-if="showBurgerButton"
+         id="burger-button"
+         v-on:click="toggleBurgerMenu"
          v-on:mouseenter="menuImage = '/static/menuHover.png'"
          v-on:mouseleave="menuImage = '/static/menu.png'">
-      <img alt="burger menu"
+      <img style="display: block"
+           alt="burger menu"
            v-bind:src="menuImage"/>
     </div>
 
-    <ul id="nav-bar"
-        class="top-nav">
+    <ul id="nav-bar-ul">
 
-      <li id="app-name">
-        <router-link to="/">
+      <!-- App name -->
+      <router-link class="nav-bar-item"
+                   tag="li"
+                   to="/">
+        <a class="nav-link">
           UBeat
-        </router-link>
-      </li>
+        </a>
+      </router-link>
 
       <!-- Search component -->
-      <li>
-        <div class="dropdown"
+      <li v-if="showNavBarItem"
+          class="nav-bar-item">
+        <div style="display: inline-block"
              ref="searchDropdown">
           <input type="search"
                  id="main-search"
@@ -35,8 +42,7 @@
           <div class="dropdown-search-result"
                v-if="search_flag_on_focus && searchInput !== ''">
             <div id="search-result"
-                 class="search-result"
-                 v-for="result of autocompleteresults"
+                 v-for="result of autocompleteResults"
                  v-bind:key="result.collectionId"
                  v-on:mousedown="searchInput = result">
               {{result}}
@@ -48,7 +54,7 @@
              src="../assets/search.png"
              alt="Search button"
              v-on:click="routeToResults">
-        <div class="dropdown"
+        <div style="display: inline-block"
              ref="searchDropdown">
           <a class="dropdown-button"
              v-on:click="isSearchDropdownVisible = !isSearchDropdownVisible">
@@ -106,38 +112,46 @@
         </div>
       </li>
 
-      <li>
-        <router-link to="/">
+      <router-link v-if="showNavBarItem"
+                   class="nav-bar-item"
+                   tag="li"
+                   to="/">
+        <a class="nav-link">
           Home
-        </router-link>
-      </li>
+        </a>
+      </router-link>
 
-      <li v-if="loggedIn()">
-        <router-link to="/playlist">
-          Playlist
-        </router-link>
-      </li>
+      <router-link v-if="loggedIn() && showNavBarItem"
+                   class="nav-bar-item"
+                   tag="li"
+                   to="/playlist">
+        <a class="nav-link">
+          Playlists
+        </a>
+      </router-link>
 
       <!-- User dropdown with profile and logout -->
-      <li v-if="loggedIn()">
-        <div class="dropdown"
+      <li v-if="loggedIn() && showNavBarItem"
+          class="nav-bar-item">
+        <div style="display: inline-block"
              ref="userDropdown"
              v-on:click="isUserDropdownVisible = !isUserDropdownVisible">
-          <a class="dropdown-button">
-            <router-link to="#">
-              {{username}}
-            </router-link>
-            <img src="../assets/arrow_down.png"
+          <div class="dropdown-button">
+            {{username}}
+            <img class="centered-vertically"
+                 src="../assets/arrow_down.png"
                  alt="Scroll Arrow"/>
-          </a>
+          </div>
           <div class="dropdown-content"
                v-if="isUserDropdownVisible">
-            <router-link to="/user">
+            <router-link class="nav-link"
+                         to="/user">
               <img src="../assets/settings.png"
                    alt="Settings Icon"/>
               Profile
             </router-link>
-            <router-link to="#">
+            <router-link class="nav-link"
+                         to="#">
               <div v-on:click="logout">
                 <img src="../assets/sign-out-option.png"
                      alt="Sign Out Icon"/>
@@ -148,17 +162,23 @@
         </div>
       </li>
 
-      <li v-if="!loggedIn()">
-        <router-link to="/login">
+      <router-link v-if="!loggedIn() && showNavBarItem"
+                   class="nav-bar-item"
+                   tag="li"
+                   to="/login">
+        <a class="nav-link">
           Sign in
-        </router-link>
-      </li>
+        </a>
+      </router-link>
 
-      <li v-if="!loggedIn()">
-        <router-link to="/signup">
+      <router-link v-if="!loggedIn() && showNavBarItem"
+                   class="nav-bar-item"
+                   tag="li"
+                   to="/signup">
+        <a class="nav-link">
           Sign up
-        </router-link>
-      </li>
+        </a>
+      </router-link>
 
     </ul>
 
@@ -182,8 +202,25 @@
       isUserDropdownVisible: false,
       isSearchDropdownVisible: false,
       autocompleteResults: [],
-      search_flag_on_focus: false
+      search_flag_on_focus: false,
+      showBurgerButton: false,
+      showBurgerMenu: false
     }),
+
+    computed: {
+      navMinHeight: function () {
+        const height = this.showBurgerMenu ? '200px' : '50px';
+        return { 'min-height': height };
+      },
+
+      showNavBarItem: function () {
+        let result = true;
+        if (this.showBurgerButton && !this.showBurgerMenu) {
+          result = false;
+        }
+        return result;
+      }
+    },
 
     watch: {
       // Whenever username changes, this function will run.
@@ -194,6 +231,8 @@
 
     async created() {
       document.addEventListener('click', this.documentClick);
+
+      window.addEventListener('resize', this.isBurgerButtonVisible);
 
       // TODO(Eric): Test code
       // const user = await api.login('ericperron@videotron.ca', '123');
@@ -278,6 +317,7 @@
 
     destroyed() {
       document.removeEventListener('click', this.documentClick);
+      window.removeEventListener('resize', this.isBurgerButtonVisible);
     },
 
     methods: {
@@ -290,13 +330,8 @@
         }
       },
 
-      responsiveBurger() {
-        const navbar = document.getElementById('nav-bar');
-        if (navbar.className === 'top-nav') {
-          navbar.className += '-responsive';
-        } else {
-          navbar.className = 'top-nav';
-        }
+      toggleBurgerMenu() {
+        this.showBurgerMenu = !this.showBurgerMenu;
       },
 
       async search() {
@@ -345,6 +380,10 @@
         if (searchDropdown && searchDropdown !== target && !searchDropdown.contains(target)) {
           this.isSearchDropdownVisible = false;
         }
+      },
+
+      isBurgerButtonVisible() {
+        this.showBurgerButton = window.matchMedia('(max-width: 800px)').matches;
       }
     }
 
@@ -352,87 +391,112 @@
 </script>
 
 <style scoped>
-  nav {
+  #nav-header {
     background-color: #303030;
     font-size:        large;
-    padding:          10px;
+    padding:          10px 0;
     position:         fixed;
     top:              0;
     left:             0;
     width:            100%;
-    min-height:       50px;
     z-index:          10;
   }
 
-  nav ul {
-    list-style-type:      none;
-    margin:               0;
-    padding-inline-start: 0;
-    text-align:           center;
+  #burger-button {
+    cursor:   pointer;
+    position: fixed;
+    margin:   0 10px;
+    z-index:  999;
   }
 
-  nav li {
-    display:       inline;
-    padding-left:  10px;
-    padding-right: 10px;
-  }
-
-  nav a {
-    display:         inline-block;
-    margin:          2px;
-    text-decoration: none;
-  }
-
-  nav a:link, nav a:visited {
-    color: #9e9e9e;
-  }
-
-  nav a:hover, nav a:active, nav a:focus {
+  .router-link-exact-active {
     color: white;
   }
 
-  #burger-button {
-    display: none;
-    cursor:  pointer;
+  #nav-bar-ul {
+    list-style-type: none;
+    margin:          0;
+    padding:         0;
+    text-align:      center;
+  }
+
+  .nav-bar-item {
+    display: inline-block;
+    padding: 0 10px;
+  }
+
+  .nav-link {
+    display:         inline-block;
+    text-decoration: none;
+  }
+
+  .nav-link:link,
+  .nav-link:visited {
+    color: #9e9e9e;
+  }
+
+  .nav-link:hover,
+  .nav-link:active,
+  .nav-link:focus {
+    color: white;
   }
 
   #main-search {
     background-color: #e1e1e1;
-    color:            #202020;
-    border-radius:    6px;
+    border-radius:    4px;
+    width:            175px;
+  }
+
+  .dropdown-search-result {
+    position:                   absolute;
+    background-color:           #4f4f4f;
+    /* Same value as the search input */
+    width:                      175px;
+    box-shadow:                 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index:                    1;
+    border-bottom-left-radius:  4px;
+    border-bottom-right-radius: 4px;
+  }
+
+  #search-result {
+    padding:         10px 5px;
+    text-decoration: none;
+    display:         block;
+    font-size:       medium;
+  }
+
+  #search-result:hover {
+    background-color: #888888
   }
 
   #search-button {
     width:          20px;
     height:         20px;
-    padding-left:   0;
     vertical-align: middle;
-    horiz-align:    left;
     cursor:         pointer;
   }
 
   .dropdown-button {
     background-color: #4f4f4f;
     color:            #b7b7b7;
-    padding:          16px;
-    border-radius:    6px;
-    font-size:        large;
+    display:          inline-block;
+    padding:          5px 10px;
+    border-radius:    4px;
     border:           none;
     cursor:           pointer;
   }
 
-  .dropdown {
-    display: inline-block;
+  .centered-vertically {
+    vertical-align: middle;
   }
 
   .dropdown-content {
-    position:                   absolute;
-    background-color:           #4f4f4f;
-    min-width:                  160px;
-    box-shadow:                 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    z-index:                    1;
-    border-bottom-left-radius:  6px;
-    border-bottom-right-radius: 6px;
+    position:         absolute;
+    background-color: #4f4f4f;
+    min-width:        100px;
+    box-shadow:       0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    z-index:          1;
+    border-radius:    4px;
   }
 
   .dropdown-content a {
@@ -440,88 +504,21 @@
     text-decoration: none;
     display:         block;
     font-size:       large;
+    text-align:      left;
   }
 
   .dropdown-content a:hover {
-    background-color: #dddddd
-  }
-
-  .dropdown-search-result {
-    position:                   absolute;
-    background-color:           #4f4f4f;
-    min-width:                  160px;
-    max-width:                  300px;
-    box-shadow:                 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    z-index:                    1;
-    border-bottom-left-radius:  6px;
-    border-bottom-right-radius: 6px;
-  }
-
-  .search-result {
-    padding:         10px 5px;
-    text-decoration: none;
-    display:         block;
-    font-size:       medium;
-  }
-
-  .search-result:hover {
-    background-color: #dddddd
+    background-color: #888888
   }
 
   @media screen and (max-width: 800px) {
-    nav li {
+    .nav-bar-item {
       display: block;
-      width:   100%;
-    }
-
-    #main-search {
-      width: 70%;
-    }
-
-    #burger-button {
-      display:  block;
-      position: fixed;
-      left:     10px;
-      top:      15px;
-      z-index:  999;
     }
 
     .dropdown-button {
       background-color: transparent;
       padding:          0;
-    }
-
-    .dropdown-content {
-      background-color: transparent;
-      box-shadow:       none;
-    }
-
-    .dropdown-content a {
-      padding:    0 0 0 20px;
-      text-align: left;
-    }
-
-    .dropdown-content a:hover {
-      background-color: transparent
-    }
-
-    .top-nav li:not(#app-name) {
-      display: none;
-    }
-
-    .top-nav-responsive {
-      min-height: 200px;
-    }
-
-    #search-result {
-      margin-left:      140px;
-      width:            200px;
-      background-color: white;
-      color:            black
-    }
-
-    #search-result:hover {
-      background-color: darkgray;
     }
   }
 </style>
