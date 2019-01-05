@@ -1,36 +1,47 @@
 <template>
   <div>
-    <h1>Playlists:</h1>
+    <h1 class="centered-text">
+      Playlists
+    </h1>
 
-    <section id="section-new-playlist">
-      New playlist:
-      <input id="new-task-name"
+    <!-- New Playlist Section -->
+    <section class="centered-text">
+      <label for="new-playlist-name">
+        New playlist:
+      </label>
+      <input id="new-playlist-name"
              type="text"
-             placeholder="Playlist name"
+             placeholder="Playlist name..."
              v-model="newPlaylistName"/>
-      <button id="create-playlist"
+      <button id="create-playlist-button"
               v-on:click="createPlaylist">
         Create playlist
       </button>
     </section>
 
+    <!-- Add Track Section -->
     <section id="section-add-track"
+             class="centered-text"
              v-if="playlists && playlists.length">
       <div id="search">
-        Add track to playlist:
-        <input id="search-track-name"
-               type="search"
-               placeholder="Search tracks..."
-               v-model="trackSearch"
-               v-on:focus="flag_on_focus = true"
-               v-on:blur="flag_on_focus = false"
-               v-on:keyup="searchTracks()">
-        <div id="search-result"
-             v-for="track of searchedTracks"
-             v-bind:key="track.collectionId"
-             v-if="flag_on_focus && trackSearch !== ''"
-             v-on:mousedown="selectTrack(track)">
-          {{track.trackName}}, {{track.artistName}}
+        <label for="search-track-name">
+          Add track to playlist:
+        </label>
+        <div id="search-wrapper">
+          <input id="search-track-name"
+                 type="search"
+                 placeholder="Search tracks..."
+                 v-model="trackSearch"
+                 v-on:focus="flag_on_focus = true"
+                 v-on:blur="flag_on_focus = false"
+                 v-on:keyup="searchTracks()">
+          <div v-if="flag_on_focus && trackSearch !== ''"
+               id="search-result"
+               v-for="track of searchedTracks"
+               v-bind:key="track.collectionId"
+               v-on:mousedown="selectTrack(track)">
+            {{track.trackName}}, {{track.artistName}}
+          </div>
         </div>
       </div>
       <select id="select-playlist"
@@ -50,7 +61,8 @@
       </button>
     </section>
 
-    <ul id="list-playlists"
+    <!-- Playlists -->
+    <ul class="list"
         v-if="playlists && playlists.length">
       <li v-for="playlist of playlists"
           v-bind:key="playlist.id">
@@ -72,8 +84,7 @@
 
             <div class="playlist-header-edit"
                  v-if="flag_on_edit === playlist.id">
-              <input class="edit-task-name"
-                     type="text"
+              <input type="text"
                      placeholder="Playlist name"
                      v-model="editPlaylistName"/>
               <button class="validate-edit-playlist-button"
@@ -104,7 +115,7 @@
               <div class="track-remove-button caption"></div>
             </div>
 
-            <ul id="list-tracks"
+            <ul class="list"
                 v-if="playlist.tracks && playlist.tracks.length">
               <li v-for="track of playlist.tracks"
                   v-bind:key="track.trackId">
@@ -227,21 +238,11 @@
 </script>
 
 <style scoped>
-  h1 {
-    margin-left: 5%;
+  .centered-text {
+    text-align: center;
   }
 
-  ul {
-    list-style-type: none;
-    padding-left:    0;
-  }
-
-  #section-new-playlist {
-    margin-left: 5%;
-  }
-
-  #create-playlist {
-    display:          inline;
+  #create-playlist-button {
     background-color: green;
     border:           green;
     border-radius:    10px;
@@ -253,14 +254,16 @@
   }
 
   #section-add-track {
-    margin-left: 5%;
-    display:     inline;
+    margin: 10px 0;
   }
 
   #search {
-    position: absolute;
-    top:      220px;
-    left:     5.5%;
+    display: inline-block;
+  }
+
+  #search-wrapper {
+    display:  inline-block;
+    position: relative
   }
 
   #search-track-name {
@@ -268,8 +271,7 @@
   }
 
   #search-result {
-    margin-left:      140px;
-    width:            200px;
+    position:         absolute;
     background-color: white;
     color:            black
   }
@@ -278,16 +280,7 @@
     background-color: darkgray;
   }
 
-  #select-playlist {
-    position: absolute;
-    top:      222px;
-    left:     29%;
-  }
-
   #track-add-button {
-    position:         absolute;
-    top:              215px;
-    left:             42%;
     background-color: green;
     border:           green;
     border-radius:    10px;
@@ -298,14 +291,13 @@
     cursor:           pointer;
   }
 
-  #list-playlists {
-    margin-top: 5%;
+  .list {
+    list-style-type: none;
+    padding-left:    0;
   }
 
   .delete-playlist-button {
-    position:         relative;
-    top:              -20px;
-    left:             1250px;
+    position:         absolute;
     background-color: red;
     border:           red;
     border-radius:    10px;
@@ -318,11 +310,7 @@
 
   .playlist-header {
     text-align: center;
-    margin-top: -40px
-  }
-
-  .playlist-header-edit {
-    display: inline;
+    width:      100%;
   }
 
   .playlist-name {
@@ -338,6 +326,10 @@
     font-size:        16px;
     padding:          10px 10px;
     cursor:           pointer;
+  }
+
+  .playlist-header-edit {
+    display: inline;
   }
 
   .validate-edit-playlist-button {
@@ -362,6 +354,11 @@
     cursor:           pointer;
   }
 
+  .caption {
+    font-weight: bold;
+    font-size:   1.25em;
+  }
+
   .track-list {
     display:         flex;
     flex-wrap:       nowrap;
@@ -372,36 +369,28 @@
     padding:         6px 0 0 0;
   }
 
-  .track-list > .track-title {
+  .track-title {
     flex-grow: 2;
     max-width: 20%;
   }
 
-  .track-list > .track-play-button {
+  .track-play-button {
     flex-grow:     1;
     max-width:     8%;
     margin-top:    10px;
     margin-bottom: 10px;
   }
 
-  .track-list > .track-artist, .track-list > .track-time, .track-list > .track-remove-button {
+  .track-artist,
+  .track-time,
+  .track-remove-button {
     flex-grow: 1;
     max-width: 8%;
   }
 
-  .track-list > .caption {
-    font-weight: bold;
-    font-size:   1.25em;
-  }
-
-  .track-play-button > img {
-    width:  30px;
-    cursor: pointer;
-  }
-
-  .track-remove-button > button {
-    background-color: red;
-    border:           red;
+  .track-play-button > button {
+    background-color: blue;
+    border:           blue;
     border-radius:    10px;
     color:            white;
     font-weight:      bold;
@@ -410,9 +399,9 @@
     cursor:           pointer;
   }
 
-  .track-play-button > button {
-    background-color: blue;
-    border:           blue;
+  .track-remove-button > button {
+    background-color: red;
+    border:           red;
     border-radius:    10px;
     color:            white;
     font-weight:      bold;
